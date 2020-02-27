@@ -1,0 +1,101 @@
+/* components/dynamicForm/index.wxss */
+page{
+  background-color: #eeeeef;
+}
+.disable{
+  opacity: 0.5;
+}
+.flex{
+  display: flex;
+  align-items: center;
+}
+.form-box{
+  padding: 0 30rpx;
+  padding-right: 0;
+  border-top: 1px solid #eee;
+  background-color: #fff;
+}
+.form-row{
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  font-size: 30rpx;
+  border-bottom: 1px solid #eee;
+}
+.ipt-row{
+  align-items: flex-start;
+}
+.form-row:last-child{
+  border-bottom: none;
+}
+.form-lable{
+  position: relative;
+  width: 120rpx;
+  word-break: break-all;
+  padding-right: 30rpx;
+  flex-shrink: 0;
+  flex-grow: 0;
+}
+.field{
+  width: 100%;
+  flex-grow: 1;
+  height: 45rpx;
+  padding-right: 30rpx;
+  box-sizing: border-box;
+  line-height: 45rpx;
+}
+.error-info{
+  font-size: 24rpx;
+  color: #f00;
+}
+.required::before{
+  position: absolute;
+  top: 50%;
+  left: -18rpx;
+  transform: translateY(-35%);
+  content: '*';
+  color: #f00;
+  font-size: 36rpx;
+}
+.form-btn{
+  margin: 30px 0;
+  background-color: #19d;
+  color: #fff;
+}
+.row-icon{
+  padding-right: 20rpx;
+}
+.img-box{
+  padding-top: 25rpx;
+  padding-bottom: 25rpx;
+}
+.mb-24{
+  margin-bottom: 24rpx;
+}
+.area-lable{
+  position: relative;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+}
+.textarea-box{
+  padding-top: 20rpx;
+}
+.text-area{
+  position: relative;
+  width: 690rpx;
+  padding: 20rpx;
+  padding-bottom: 60rpx;
+  font-size: 30rpx;
+  min-height: 200rpx;
+  box-sizing: border-box;
+  border-radius: 8rpx;
+  border: 1px solid #eee;
+}
+.text-num{
+  position: absolute;
+  right: 20rpx;
+  bottom: 10px;
+  text-align: right;
+  color: #999;
+}

@@ -1,0 +1,8 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-icon": "./vant/icon/index",
+    "van-uploader": "./vant/uploader/index",
+    "time-picker": "./components/timePicker/timePicker"
+  }
+}
