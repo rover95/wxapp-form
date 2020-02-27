@@ -1,5 +1,6 @@
 import { VantComponent } from '../common/component';
 import { isImageFile } from './utils';
+
 VantComponent({
     props: {
         disabled: Boolean,

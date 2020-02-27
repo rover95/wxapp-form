@@ -1,7 +1,8 @@
-<wxs src="../wxs/utils.wxs" module="utils" />
+<!-- <wxs src="../wxs/utils.wxs" module="utils" /> -->
 
 <view
   wx:if="{{ info !== null && info !== '' || dot }}"
-  class="custom-class van-info {{ utils.bem('info', { dot }) }}"
+  class="custom-class van-info "
   style="{{ customStyle }}"
 >{{ dot ? '' : info }}</view>
+<!-- <view>{{ utils.bem('info', { dot }) }}</view> -->

@@ -1,9 +1,8 @@
 /* components/dynamicForm/index.wxss */
-page{
+.page{
   background-color: #eeeeef;
-}
-.disable{
-  opacity: 0.5;
+  padding-top: 1px;
+  padding-bottom: 1px;
 }
 .flex{
   display: flex;
@@ -12,7 +11,10 @@ page{
 .form-box{
   padding: 0 30rpx;
   padding-right: 0;
+  margin: 30rpx;
+  box-sizing: border-box;
   border-top: 1px solid #eee;
+  border-radius: 10rpx;
   background-color: #fff;
 }
 .form-row{
@@ -36,6 +38,7 @@ page{
   padding-right: 30rpx;
   flex-shrink: 0;
   flex-grow: 0;
+  font-weight: 700;
 }
 .field{
   width: 100%;
@@ -59,8 +62,9 @@ page{
   font-size: 36rpx;
 }
 .form-btn{
-  margin: 30px 0;
-  background-color: #19d;
+  margin: 60rpx auto;
+  width: 400rpx;
+  background-color: #17e;
   color: #fff;
 }
 .row-icon{
@@ -77,13 +81,14 @@ page{
   position: relative;
   font-size: 30rpx;
   margin-right: 20rpx;
+  font-weight: 700;
 }
 .textarea-box{
   padding-top: 20rpx;
 }
 .text-area{
   position: relative;
-  width: 690rpx;
+  width: 630rpx;
   padding: 20rpx;
   padding-bottom: 60rpx;
   font-size: 30rpx;
