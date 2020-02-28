@@ -71,7 +71,7 @@ VantComponent({
         startUpload() {
             if (this.data.disabled)
                 return;
-            const { name = '', capture, maxCount, multiple, maxSize, accept, sizeType, lists, useBeforeRead = false // 是否定义了 beforeRead
+            const { name = '', capture, maxCount, multiple, maxSize, accept, sizeType,videoCfg={}, lists, useBeforeRead = false // 是否定义了 beforeRead
              } = this.data;
             let chooseFile = null;
             const newMaxCount = maxCount - lists.length;
@@ -83,6 +83,22 @@ VantComponent({
                         sourceType: capture,
                         sizeType,
                         success: resolve,
+                        fail: reject
+                    });
+                });
+            }
+            else if (accept === 'video'){
+                chooseFile = new Promise((resolve, reject) => {
+                    wx.chooseMedia({
+                        count: videoCfg.count || 9,
+                        mediaType: ['video'],
+                        sourceType: videoCfg.sourceType || ['album', 'camera'],
+                        maxDuration: videoCfg.maxDuration || 10,
+                        camera: videoCfg.camera || 'back',
+                        success: (res)=>{
+                            res.isVideo = true;
+                            resolve(res);
+                        },
                         fail: reject
                     });
                 });
@@ -112,6 +128,13 @@ VantComponent({
                     this.$emit('oversize', { name });
                     return;
                 }
+                let upData = { file, name };
+                if(res.isVideo){
+                    file.map(val=>{
+                        val.isVideo = true;
+                        return val;
+                    });
+                }
                 // 触发上传之前的钩子函数
                 if (useBeforeRead) {
                     this.$emit('before-read', {
@@ -120,13 +143,13 @@ VantComponent({
                         callback: (result) => {
                             if (result) {
                                 // 开始上传
-                                this.$emit('after-read', { file, name });
+                                this.$emit('after-read', upData);
                             }
                         }
                     });
                 }
                 else {
-                    this.$emit('after-read', { file, name });
+                    this.$emit('after-read', upData);
                 }
             })
                 .catch(error => {

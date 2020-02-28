@@ -44,7 +44,7 @@ Component({
           case 'picker':
             pickers.push(val);
             break;
-          case 'image':
+          case 'file':
             files.push(val);
             break;
           case 'input':
@@ -125,9 +125,15 @@ Component({
           this.setData({
             [`inputMap.${i}`]: info
           });
-        } else if (info.original.type === 'image'){
+        } else if (info.original.type === 'file'){
           if (info.list.length === 0 && info.original.isRequired){
-            info.error = '请选择图片';
+            let error = '请选择文件';
+            if (info.original.accept ==='video'){
+              error = '请选择视频';
+            } else if (info.original.accept === 'image'){
+              error = '请选择图片';
+            }
+            info.error = error;
             hasError = true;
             this.setData({
               [`fileMap.${i}`]: info
@@ -208,13 +214,13 @@ Component({
     onFileRead(e){
       console.log(e);
       for (let val of e.detail.file){
-        if (val.size > 2097152) {
-          wx.showToast({
-            title: '请选择2MB以内的文件',
-            icon: 'none'
-          });
-          return;
-        }
+        // if (val.size > 2097152) {
+        //   wx.showToast({
+        //     title: '请选择2MB以内的文件',
+        //     icon: 'none'
+        //   });
+        //   return;
+        // }
       }
       const files = this.data.fileMap[e.target.id];
       files.error = null;

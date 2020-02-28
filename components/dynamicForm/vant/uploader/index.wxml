@@ -20,6 +20,14 @@
         bind:tap="doPreviewImage"
       />
       <view
+        wx:elif="{{ item.isVideo }}"
+        class="van-uploader__preview"
+        style="width:280rpx; height:280rpx;"
+        class="van-uploader__preview"
+      >
+        <video class="van-uploader__preview-video" data-url="{{ item.url || item.path }}" style="width:280rpx; height:280rpx;" src="{{ item.url || item.tempFilePath }}" controls></video>
+      </view>
+      <view
         wx:else
         class="van-uploader__file"
         style="width: {{ previewSize }}; height: {{ previewSize }};"
@@ -30,7 +38,7 @@
       <van-icon
         wx:if="{{ deletable && !disabled }}"
         name="clear"
-        size='30'
+        size='40'
         class="van-uploader__preview-delete"
         data-index="{{ index }}"
         bind:tap="deleteItem"

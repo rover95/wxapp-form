@@ -36,14 +36,14 @@
           <view class="text-num">{{inputMap[item.id].value.length||0}}/{{item.maxLength}}</view>
         </view>
       </view>
-      <view class="img-box" wx:elif="{{item.type==='image'}}">
+      <view class="img-box" wx:elif="{{item.type==='file'}}">
         <!-- <view class="area-lable mb-24 {{item.isRequired?'required':''}}">{{item.lable}}</view> -->
         <view class="flex mb-24">
           <view class="area-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
           <view class="error-info" wx:if="{{fileMap[item.id].error}}">{{fileMap[item.id].error}}</view>
         </view>
         <van-uploader file-list="{{ fileMap[item.id].list }}" preview-size="196rpx" max-count="{{fileMap[item.id].original.maxCount || 9}}"
-          disabled="{{false}}" accept="{{fileMap[item.id].original.accept || 'image'}}" id="{{item.id}}" multiple image-fit="aspectFill"
+          disabled="{{fileMap[item.id].original.disabled || false}}" accept="{{fileMap[item.id].original.accept || 'image'}}" id="{{item.id}}" multiple image-fit="aspectFill"
           bind:after-read="onFileRead" bind:delete="onFileDelete" />
       </view>
     </block>
