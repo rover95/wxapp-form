@@ -14,8 +14,7 @@
       <!-- picker选择器 -->
       <view class="form-row {{item.isRequired?'required':''}}" wx:elif="{{item.type==='picker'}}">
         <view class="form-lable">{{item.lable}}</view>
-        <picker class="field" range="{{item.range}}" disabled="{{item.disabled}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}"
-          range-key="name" bindchange="onPickerChange">
+        <picker class="field" range="{{item.range}}" disabled="{{item.disabled}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}" range-key="name" bindchange="onPickerChange">
           {{item.range[pickerMap[item.id].idx].name}}
         </picker>
         <van-icon class="row-icon" name="arrow"></van-icon>
@@ -48,8 +47,8 @@
           <view class="error-info" wx:if="{{fileMap[item.id].error}}">{{fileMap[item.id].error}}</view>
         </view>
         <van-uploader file-list="{{ fileMap[item.id].list }}" preview-size="196rpx" max-count="{{fileMap[item.id].original.maxCount || 9}}"
-          disabled="{{fileMap[item.id].original.disabled || false}}" accept="{{fileMap[item.id].original.accept || 'image'}}"
-          id="{{item.id}}" multiple image-fit="aspectFill" bind:after-read="onFileRead" bind:delete="onFileDelete" />
+          disabled="{{fileMap[item.id].original.disabled || false}}" accept="{{fileMap[item.id].original.accept || 'image'}}" id="{{item.id}}" multiple image-fit="aspectFill"
+          bind:after-read="onFileRead" bind:delete="onFileDelete" />
       </view>
     </block>
   </view>
