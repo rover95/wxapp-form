@@ -2,6 +2,7 @@
 <view class="page">
   <view class="form-box">
     <block wx:for="{{formData}}" wx:key="id">
+      <!-- input输入框 -->
       <view class="form-row ipt-row" wx:if="{{item.type==='input'}}">
         <view class="form-lable {{item.isRequired?'required':'' +''}}">{{item.lable}}</view>
         <view style="width:100%">
@@ -9,33 +10,37 @@
             disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}" />
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>
-  
       </view>
+      <!-- picker选择器 -->
       <view class="form-row {{item.isRequired?'required':''}}" wx:elif="{{item.type==='picker'}}">
         <view class="form-lable">{{item.lable}}</view>
-        <picker class="field" range="{{item.range}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}" range-key="name" bindchange="onPickerChange">
+        <picker class="field" range="{{item.range}}" disabled="{{item.disabled}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}"
+          range-key="name" bindchange="onPickerChange">
           {{item.range[pickerMap[item.id].idx].name}}
         </picker>
         <van-icon class="row-icon" name="arrow"></van-icon>
       </view>
+      <!-- 日期选择器 -->
       <view class="form-row {{item.isRequired?'required':''}}" wx:elif="{{item.type==='date'}}">
         <view class="form-lable">{{item.lable}}</view>
-        <view class="field" bindtap="datePickerShow" data-id="{{item.id}}">{{dateMap[item.id].config.endDate?dateMap[item.id].startDate+' ~ ' + dateMap[item.id].endDate: dateMap[item.id].startDate}}</view>
+        <view class="field" bindtap="datePickerShow" data-disabled="{{item.disabled}}" data-id="{{item.id}}">{{dateMap[item.id].config.endDate?dateMap[item.id].startDate+' ~ ' + dateMap[item.id].endDate: dateMap[item.id].startDate}}</view>
         <time-picker pickerShow="{{dateMap[item.id].show}}" id="{{item.id}}" wx:if="{{!isPickerRender}}" bind:hidePicker="datePickerHide"
           bind:setPickerTime="setPickerTime" config="{{dateMap[item.id].original.config}}"></time-picker>
         <van-icon class="row-icon" name="arrow"></van-icon>
       </view>
+      <!-- 文本框 -->
       <view class="textarea-box" wx:elif="{{item.type==='textarea'}}">
         <view class="flex mb-24">
           <view class="area-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>
         <view class="text-area">
-          <textarea style="width:100%" value="{{item.defaultValue || null}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}"
+          <textarea style="width:100%" value="{{item.defaultValue || null}}" disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}"
             id="{{item.id}}" bindinput="onInput" auto-height="{{true}}" maxlength="{{item.maxLength}}" name="" cols="30" rows="10"></textarea>
           <view class="text-num">{{inputMap[item.id].value.length||0}}/{{item.maxLength}}</view>
         </view>
       </view>
+      <!-- 文件上传 -->
       <view class="img-box" wx:elif="{{item.type==='file'}}">
         <!-- <view class="area-lable mb-24 {{item.isRequired?'required':''}}">{{item.lable}}</view> -->
         <view class="flex mb-24">
@@ -43,10 +48,10 @@
           <view class="error-info" wx:if="{{fileMap[item.id].error}}">{{fileMap[item.id].error}}</view>
         </view>
         <van-uploader file-list="{{ fileMap[item.id].list }}" preview-size="196rpx" max-count="{{fileMap[item.id].original.maxCount || 9}}"
-          disabled="{{fileMap[item.id].original.disabled || false}}" accept="{{fileMap[item.id].original.accept || 'image'}}" id="{{item.id}}" multiple image-fit="aspectFill"
-          bind:after-read="onFileRead" bind:delete="onFileDelete" />
+          disabled="{{fileMap[item.id].original.disabled || false}}" accept="{{fileMap[item.id].original.accept || 'image'}}"
+          id="{{item.id}}" multiple image-fit="aspectFill" bind:after-read="onFileRead" bind:delete="onFileDelete" />
       </view>
     </block>
   </view>
-  <button class='form-btn' bindtap="formSubmit">提交</button>
+  <button wx:if="{{showSubmitBtn}}" class='form-btn' bindtap="formSubmit">提交</button>
 </view>

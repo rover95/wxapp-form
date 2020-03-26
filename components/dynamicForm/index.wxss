@@ -9,7 +9,7 @@
   align-items: center;
 }
 .form-box{
-  padding: 0 30rpx;
+  padding: 0 30rpx 30px;
   padding-right: 0;
   margin: 30rpx;
   box-sizing: border-box;
@@ -72,7 +72,7 @@
 }
 .img-box{
   padding-top: 25rpx;
-  padding-bottom: 25rpx;
+  /* padding-bottom: 25rpx; */
 }
 .mb-24{
   margin-bottom: 24rpx;

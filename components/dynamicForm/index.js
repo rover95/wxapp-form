@@ -7,8 +7,20 @@ Component({
    */
   properties: {
     formData: Array,
+    showSubmitBtn: {
+      type: Boolean,
+      value: true
+    },
+    toSubmit: Number
   },
-
+  //监听数据变化, 当toSubmit 值变化时, 代表父组件点击提交案例事件
+  observers: {
+    'toSubmit': function (e) {
+      if (e) {
+        this.formSubmit();
+      }
+    }
+  },
   /**
    * 组件的初始数据
    */
@@ -18,7 +30,7 @@ Component({
     inputMap: {}
   },
   lifetimes: {
-    attached: function () { 
+    attached: function () {
       this.formInit();
     },
     moved: function () { },
@@ -35,11 +47,11 @@ Component({
    */
   methods: {
     //表单初始化
-    formInit(){
-      
-      const pickerMap = {}, fileMap = {}, inputMap = {}, dateMap={};//存储各表单变化后的值,表单id为索引
-      const pickers = [], files = [], inputs = [], datePickers=[];
-      this.data.formData.forEach(val=>{
+    formInit() {
+
+      const pickerMap = {}, fileMap = {}, inputMap = {}, dateMap = {};//存储各表单变化后的值,表单id为索引
+      const pickers = [], files = [], inputs = [], datePickers = [];
+      this.data.formData.forEach(val => {
         switch (val.type) {
           case 'picker':
             pickers.push(val);
@@ -71,23 +83,23 @@ Component({
           list: val.fileList
         };
       });
-      inputs.forEach(val=>{
+      inputs.forEach(val => {
         inputMap[val.id] = {
           original: val,
           value: val.defaultValue || '',
           placeholder: val.placeholder,
           error: null,
-          rules: val.rules? val.rules.map(val=>{
+          rules: val.rules ? val.rules.map(val => {
             val.regular = new RegExp(val.regular);
             return val;
-          }):[]
+          }) : []
         };
       });
-      datePickers.forEach(val=>{
+      datePickers.forEach(val => {
         dateMap[val.id] = {
           original: val,
           show: false,
-          startDate: formatTime().split(' ')[0] ,
+          startDate: formatTime().split(' ')[0],
           endDate: formatTime().split(' ')[0]
         };
       });
@@ -103,16 +115,16 @@ Component({
       });
     },
     //提交表单
-    formSubmit(){
+    formSubmit() {
       let formData = {};
-      const {pickerMap, inputMap, dateMap, fileMap} = this.data;
-      for(let i in this.data){ //获取表单数据后缀为Map
-        if(i.match(/Map$/)){
-          formData = Object.assign({},formData,this.data[i]);
+      const { pickerMap, inputMap, dateMap, fileMap } = this.data;
+      for (let i in this.data) { //获取表单数据后缀为Map
+        if (i.match(/Map$/)) {
+          formData = Object.assign({}, formData, this.data[i]);
         }
       }
       let hasError = false;
-      for(let i in formData){//循环验证所有表单数据规则
+      for (let i in formData) {//循环验证所有表单数据规则
         let info = formData[i];
         if (info.rules) {
           for (let val of info.rules) {
@@ -125,12 +137,12 @@ Component({
           this.setData({
             [`inputMap.${i}`]: info
           });
-        } else if (info.original.type === 'file'){
-          if (info.list.length === 0 && info.original.isRequired){
+        } else if (info.original.type === 'file') {
+          if (info.list.length === 0 && info.original.isRequired) {
             let error = '请选择文件';
-            if (info.original.accept ==='video'){
+            if (info.original.accept === 'video') {
               error = '请选择视频';
-            } else if (info.original.accept === 'image'){
+            } else if (info.original.accept === 'image') {
               error = '请选择图片';
             }
             info.error = error;
@@ -141,7 +153,7 @@ Component({
           }
         }
       }
-      if(hasError){
+      if (hasError) {
         wx.showToast({
           title: '表单填写有误',
           icon: 'none'
@@ -150,17 +162,20 @@ Component({
       }
       this.triggerEvent('dynamicFormSubmit', formData);
       console.log(formData);
-      
+
     },
     //显示选择器
-    datePickerShow(e){
+    datePickerShow(e) {
+      if (e.target.dataset.disabled) {
+        return;
+      }
       this.setData({
         [`dateMap.${e.target.dataset.id}.show`]: true
       });
     },
     //隐藏时间选择器
-    datePickerHide(id){
-      if(typeof id === 'object'){
+    datePickerHide(id) {
+      if (typeof id === 'object') {
         id = id.target.id;
       }
       this.setData({
@@ -168,7 +183,7 @@ Component({
       });
     },
     //设置选择器时间
-    setPickerTime(e){
+    setPickerTime(e) {
       console.log(e);
       const { startTime, endTime } = e.detail;
       const date = this.data.dateMap[e.target.id];
@@ -180,17 +195,17 @@ Component({
       });
     },
     //输入框
-    onInput(e){
+    onInput(e) {
       const { value } = e.detail;
       const info = this.data.inputMap[e.target.id] || {};
-      if(!info){
+      if (!info) {
         return;
       }
       info.value = e.detail.value;
       info.error = null;
-      if (info.rules){
-        for (let val of info.rules){
-          if (!info.value.match(val.regular)){
+      if (info.rules) {
+        for (let val of info.rules) {
+          if (!info.value.match(val.regular)) {
             info.error = val.tips || '格式有误';
             break;
           }
@@ -201,7 +216,7 @@ Component({
       });
     },
     //picker选择
-    onPickerChange(e){
+    onPickerChange(e) {
       const { id } = e.target;
       const picker = this.data.pickerMap[id];
       picker.idx = e.detail.value;
@@ -211,16 +226,17 @@ Component({
       });
     },
     // 选择文件
-    onFileRead(e){
+    onFileRead(e) {
       console.log(e);
-      for (let val of e.detail.file){
-        // if (val.size > 2097152) {
-        //   wx.showToast({
-        //     title: '请选择2MB以内的文件',
-        //     icon: 'none'
-        //   });
-        //   return;
-        // }
+      for (let val of e.detail.file) {
+        const size = this.data.fileMap[e.target.id].original.maxSize;
+        if (val.size > size * 1024 * 1024) {
+          wx.showToast({
+            title: `请选择${size}MB以内的文件`,
+            icon: 'none'
+          });
+          return;
+        }
       }
       const files = this.data.fileMap[e.target.id];
       files.error = null;
@@ -230,7 +246,7 @@ Component({
       });
     },
     //删除文件
-    onFileDelete(e){
+    onFileDelete(e) {
       console.log(e);
       const files = this.data.fileMap[e.target.id].list;
       files.splice(e.detail.index, 1);
