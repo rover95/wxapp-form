@@ -28,6 +28,14 @@
 .ipt-row{
   align-items: flex-start;
 }
+.flex-start{
+  align-items: flex-start;
+}
+.picker-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .form-row:last-child{
   border-bottom: none;
 }
@@ -43,7 +51,7 @@
 .field{
   width: 100%;
   flex-grow: 1;
-  height: 45rpx;
+  min-height: 45rpx;
   padding-right: 30rpx;
   box-sizing: border-box;
   line-height: 45rpx;

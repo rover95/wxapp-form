@@ -73,7 +73,9 @@ Component({
       pickers.forEach(val => {
         pickerMap[val.id] = {
           original: val,
-          idx: 0
+          hasChoose: !!val.defaultIdx,
+          error:null,
+          idx: val.defaultIdx || 0
         };
       });
       files.forEach(val => {
@@ -98,10 +100,18 @@ Component({
       datePickers.forEach(val => {
         dateMap[val.id] = {
           original: val,
+          config: val.config,
+          completeTime: val.completeTime,
           show: false,
-          startDate: formatTime().split(' ')[0],
-          endDate: formatTime().split(' ')[0]
+          hasChoose: !!val.config.initStartTime,
+          error: null,
+          startDate: val.config.initStartTime || formatTime(),
+          endDate: val.config.initEndTime || formatTime()
         };
+        if (!val.completeTime){
+          dateMap[val.id].startDate = dateMap[val.id].startDate.split(' ')[0];
+          dateMap[val.id].endDate = dateMap[val.id].endDate.split(' ')[0];
+        }
       });
       this.setData({
         pickers,
@@ -126,12 +136,19 @@ Component({
       let hasError = false;
       for (let i in formData) {//循环验证所有表单数据规则
         let info = formData[i];
-        if (info.rules) {
-          for (let val of info.rules) {
-            if (!info.value.match(val.regular)) {
-              info.error = val.tips || '格式有误';
+        if (info.original.type === 'input' || info.original.type === 'textarea') {
+          if (!info.value){
+            if (info.original.isRequired){
+              info.error = info.original.lable + '不可为空';
               hasError = true;
-              break;
+            }
+          } else if (info.rules){
+            for (let val of info.rules) {
+              if (!info.value.match(val.regular)) {
+                info.error = val.tips || '格式有误';
+                hasError = true;
+                break;
+              }
             }
           }
           this.setData({
@@ -149,6 +166,14 @@ Component({
             hasError = true;
             this.setData({
               [`fileMap.${i}`]: info
+            });
+          }
+        } else if (info.original.type === 'picker' || info.original.type === 'date'){
+          if (!info.hasChoose && info.original.isRequired){
+            info.error = '请选择' + info.original.lable;
+            hasError = true;
+            this.setData({
+              [`${info.original.type}Map.${i}`]: info
             });
           }
         }
@@ -184,12 +209,16 @@ Component({
     },
     //设置选择器时间
     setPickerTime(e) {
-      console.log(e);
+      const {dateMap} = this.data;
       const { startTime, endTime } = e.detail;
-      const date = this.data.dateMap[e.target.id];
+      const date = dateMap[e.target.id];
+      if (!date.hasChoose){
+        date.hasChoose = true;
+        date.error = null;
+      }
       date.show = false;
-      date.startDate = startTime.split(' ')[0];
-      date.endDate = endTime.split(' ')[0];
+      date.startDate = date.completeTime ? startTime :startTime.split(' ')[0];
+      date.endDate = date.completeTime ?endTime :endTime.split(' ')[0];
       this.setData({
         [`dateMap.${e.target.id}`]: date
       });
@@ -203,7 +232,7 @@ Component({
       }
       info.value = e.detail.value;
       info.error = null;
-      if (info.rules) {
+      if (info.rules && info.value) {
         for (let val of info.rules) {
           if (!info.value.match(val.regular)) {
             info.error = val.tips || '格式有误';
@@ -219,6 +248,10 @@ Component({
     onPickerChange(e) {
       const { id } = e.target;
       const picker = this.data.pickerMap[id];
+      if(!picker.hasChoose){
+        picker.hasChoose = true;
+        picker.error = null;
+      }
       picker.idx = e.detail.value;
       picker.data = this.data.pickers.filter(val => val.id === id)[0].range[e.detail.value];
       this.setData({
