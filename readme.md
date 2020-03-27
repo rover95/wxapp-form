@@ -1,8 +1,7 @@
 # 动态表单组件
 
-包含图片视频选择, 正则验证, 错误提示, 日期选择, 表单初始化, 展示模式
-![image](https://user-images.githubusercontent.com/28331870/77736568-66542180-7047-11ea-8138-a67e7d886a2d.png)  
-
+包含图片视频选择, 正则验证, 错误提示, 日期选择, 表单初始化, 展示模式  
+![image](https://user-images.githubusercontent.com/28331870/77737126-4f61ff00-7048-11ea-83df-e10c100e415b.png)  
 
 ## 配置项
 ```js
