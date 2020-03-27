@@ -1,5 +1,9 @@
 # 动态表单组件
 
+包含图片视频选择, 正则验证, 错误提示, 日期选择, 表单初始化, 展示模式
+![image](https://user-images.githubusercontent.com/28331870/77736568-66542180-7047-11ea-8138-a67e7d886a2d.png)  
+
+
 ## 配置项
 ```js
 formData:Array,  //表单数组
@@ -17,7 +21,9 @@ const formData = [
     id:'ipt1',
     lable:'标题',
     isRequired: true,//是否必填
+    disabled: true,//是否禁用
     maxLength: 20,//最大长度
+    dis
     defaultValue:'巡检计划',//初始值
     rules:[//规则验证数组
       {
