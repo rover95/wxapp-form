@@ -189,6 +189,13 @@ Component({
       console.log(formData);
 
     },
+    //更新数据劫持
+    updateData(key,val){
+      this.setData({
+        [key]: val
+      });
+      this.triggerEvent('dynamicFormChange', { key, val});
+    },
     //显示选择器
     datePickerShow(e) {
       if (e.target.dataset.disabled) {
@@ -219,9 +226,7 @@ Component({
       date.show = false;
       date.startDate = date.completeTime ? startTime :startTime.split(' ')[0];
       date.endDate = date.completeTime ?endTime :endTime.split(' ')[0];
-      this.setData({
-        [`dateMap.${e.target.id}`]: date
-      });
+      this.updateData(`dateMap.${e.target.id}`,date);
     },
     //输入框
     onInput(e) {
@@ -240,9 +245,7 @@ Component({
           }
         }
       }
-      this.setData({
-        [`inputMap.${e.target.id}`]: info
-      });
+      this.updateData(`inputMap.${e.target.id}`, info);
     },
     //picker选择
     onPickerChange(e) {
@@ -254,9 +257,7 @@ Component({
       }
       picker.idx = e.detail.value;
       picker.data = this.data.pickers.filter(val => val.id === id)[0].range[e.detail.value];
-      this.setData({
-        [`pickerMap.${e.target.id}`]: picker
-      });
+      this.updateData(`pickerMap.${e.target.id}`, picker);
     },
     // 选择文件
     onFileRead(e) {
@@ -274,18 +275,14 @@ Component({
       const files = this.data.fileMap[e.target.id];
       files.error = null;
       files.list = files.list.concat(e.detail.file);
-      this.setData({
-        [`fileMap.${e.target.id}`]: files
-      });
+      this.updateData(`fileMap.${e.target.id}`, files);
     },
     //删除文件
     onFileDelete(e) {
       console.log(e);
       const files = this.data.fileMap[e.target.id].list;
       files.splice(e.detail.index, 1);
-      this.setData({
-        [`fileMap.${e.target.id}.list`]: files
-      });
+      this.updateData(`fileMap.${e.target.id}.list`, files);
     }
   }
 });

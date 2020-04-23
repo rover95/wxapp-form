@@ -109,8 +109,10 @@ Page({
     toSubmit: Math.random()
   },
   onFormSubmit(e){
-    console.log(e);
-    
+    console.log('表单提交: ', e);
+  },
+  onFormChange(e){
+    console.log('表单变化: ',e);
   },
   //变更数值, 触发表单提交事件
   toSubmitChange(){
