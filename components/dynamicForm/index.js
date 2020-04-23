@@ -73,7 +73,7 @@ Component({
       pickers.forEach(val => {
         pickerMap[val.id] = {
           original: val,
-          hasChoose: !!val.defaultIdx,
+          hasChoose: val.defaultIdx != 'undefined',
           error:null,
           idx: val.defaultIdx || 0
         };

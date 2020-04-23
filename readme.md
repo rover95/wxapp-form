@@ -14,6 +14,7 @@ bindDynamicFormSubmit:Function  //监听表单提交事件
 ## 示例
 
 ```js
+
 const formData = [
   {
     type: 'input',
@@ -120,6 +121,7 @@ const formData = [
     ]
   },
 ]
+
 //小程序原生
 <d-form formData="{{formData}}" showSubmitBtn="{{false}}" toSubmit="{{toSubmit}}" bindDynamicFormSubmit="{{onFormSubmit}}"></d-form>
 

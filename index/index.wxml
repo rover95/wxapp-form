@@ -1,1 +1,3 @@
-<d-form formData="{{formData}}"></d-form>
+<d-form formData="{{formData}}" showSubmitBtn="{{false}}" toSubmit="{{toSubmit}}" bindDynamicFormSubmit="{{onFormSubmit}}"></d-form>
+
+<button bindtap="toSubmitChange">提交</button>

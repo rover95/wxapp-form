@@ -33,7 +33,7 @@ Page({
         type: 'picker',
         id: 'picker2',
         lable: '状态',
-        defaultIdx:1,//默认选择索引
+        defaultIdx:0,//默认选择索引
         isRequired:true,
         range:[
           {
@@ -105,7 +105,18 @@ Page({
           // { url: "http://tmp/wx4c198b0bd87f5470.o6zAJs1Ghz_xnqKSRnUi….xVILGkr0x8fm00dec98217739f2e6813a5937b68f928.mp4",isVideo:true}
         ]
       },
-    ]
+    ],
+    toSubmit: Math.random()
+  },
+  onFormSubmit(e){
+    console.log(e);
+    
+  },
+  //变更数值, 触发表单提交事件
+  toSubmitChange(){
+    this.setData({
+      toSubmit: Math.random()
+    })
   },
   onLoad: function () {
     
