@@ -6,7 +6,7 @@
       <view class="form-row ipt-row" wx:if="{{item.type==='input'}}">
         <view class="form-lable {{item.isRequired?'required':'' +''}}">{{item.lable}}</view>
         <view style="width:100%">
-          <input class="field" type="text" maxlength="{{item.maxLength || -1}}" bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
+          <input class="field" type="{{inputMap[item.id].original.inputType || 'text'}}" maxlength="{{item.maxLength || -1}}" bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
             disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}" />
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>

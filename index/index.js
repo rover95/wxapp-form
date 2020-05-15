@@ -30,6 +30,16 @@ Page({
         ]
       },
       {
+        type: 'input',
+        id: 'num',
+        lable: '数字',
+        inputType: 'digit', //对应input组件type值(text,number)
+        placeholder: '请填写数字',
+        rules: [
+          
+        ]
+      },
+      {
         type: 'picker',
         id: 'picker2',
         lable: '状态',
@@ -55,7 +65,7 @@ Page({
         /* 显示完整时间包含时分秒；当使用endDate的时候关闭,不要同时打开, 否则日期将会换行；
            与config中的colum属性共同设置
         */
-        // completeTime:true,
+        // completeTime:true, //显示完整时间, 包含时分秒
         config: {
           endDate: true,
           dateLimit: true,
