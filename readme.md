@@ -21,9 +21,7 @@ const formData = [
     id:'ipt1',
     lable:'标题',
     isRequired: true,//是否必填
-    disabled: true,//是否禁用
     maxLength: 20,//最大长度
-    dis
     defaultValue:'巡检计划',//初始值
     rules:[//规则验证数组
       {
@@ -45,10 +43,19 @@ const formData = [
     ]
   },
   {
+    type: 'input',
+    id: 'num',
+    lable: '数字',
+    inputType: 'digit', //对应input组件type值(text,number)
+    placeholder: '请填写数字',
+    rules: [
+    ]
+  },
+  {
     type: 'picker',
     id: 'picker2',
     lable: '状态',
-    defaultIdx:1,//默认选择索引
+    defaultIdx:0,//默认选择索引
     isRequired:true,
     range:[
       {
@@ -70,15 +77,15 @@ const formData = [
     /* 显示完整时间包含时分秒；当使用endDate的时候关闭,不要同时打开, 否则日期将会换行；
         与config中的colum属性共同设置
     */
-    // completeTime:true,
+    // completeTime:true, //显示完整时间, 包含时分秒
     config: {
-      endDate: true,//是否显示结束时间
-      dateLimit: true,//是否控制时间范围
-      // initStartTime: "2020-01-01 12:32:44",//默认开始时间
-      // initEndTime: "2020-12-01 12:32:44",//默认结束时间
-      column: "day",//day、hour、minute、secend//时间选择器粒度,天,时,分,秒
-      limitStartTime: "2000-01-01 00:00:59",//最小可选时间
-      limitEndTime: "2100-01-01 00:00:59"//最大可选时间
+      endDate: true,
+      dateLimit: true,
+      // initStartTime: "2020-01-01 12:32:44",
+      // initEndTime: "2020-12-01 12:32:44",
+      column: "day",//day、hour、minute、secend
+      limitStartTime: "2000-01-01 00:00:59",
+      limitEndTime: "2100-01-01 00:00:59"
     }
   },
   {
@@ -98,13 +105,13 @@ const formData = [
   },
   {
     type: 'file',
-    accept: 'image',//文件类型, 视频/图片
+    accept: 'image',
     id: 'pics',
     lable: '图片上传',
-    maxCount: 5,//文件数量限制
-    maxSize: 5,//文件大小限制Mb
+    maxCount: 5,
+    maxSize: 5,
     isRequired: true,
-    fileList: [//默认列表
+    fileList: [
       { url: 'https://img.yzcdn.cn/vant/leaf.jpg', name: '图片1' }//初始图片
     ]
   },
@@ -120,8 +127,7 @@ const formData = [
       // { url: "http://tmp/wx4c198b0bd87f5470.o6zAJs1Ghz_xnqKSRnUi….xVILGkr0x8fm00dec98217739f2e6813a5937b68f928.mp4",isVideo:true}
     ]
   },
-]
-
+],
 //小程序原生
 <d-form formData="{{formData}}" showSubmitBtn="{{false}}" toSubmit="{{toSubmit}}" bindDynamicFormSubmit="{{onFormSubmit}}"></d-form>
 
