@@ -41,7 +41,8 @@
 }
 .form-lable{
   position: relative;
-  width: 120rpx;
+  min-width: 120rpx;
+  max-width: 200rpx;
   word-break: break-all;
   padding-right: 30rpx;
   flex-shrink: 0;

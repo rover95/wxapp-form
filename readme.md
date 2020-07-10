@@ -9,6 +9,7 @@ formData:Array,  //表单数组
 showSubmitBtn:Boolean, //是否显示提交按钮
 toSubmit: Number     //当不显示提交按钮, 通过父组件触发提交时, 变更toSubmit数值, 触发子组件提交
 bindDynamicFormSubmit:Function  //监听表单提交事件
+bindDynamicFormChange:Function  //监听表单变化事件
 ```
 
 ## 示例
