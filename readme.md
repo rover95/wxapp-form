@@ -24,6 +24,7 @@ const formData = [
     isRequired: true,//是否必填
     maxLength: 20,//最大长度
     defaultValue:'巡检计划',//初始值
+    disabled:true,//是否禁用
     rules:[//规则验证数组
       {
         regular: '^\\S*$',//正则字符串

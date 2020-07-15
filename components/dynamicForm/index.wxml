@@ -3,10 +3,10 @@
   <view class="form-box">
     <block wx:for="{{formData}}" wx:key="id">
       <!-- input输入框 -->
-      <view class="form-row ipt-row" wx:if="{{item.type==='input'}}">
+      <view class="form-row ipt-row " wx:if="{{item.type==='input'}}">
         <view class="form-lable {{item.isRequired?'required':'' +''}}">{{item.lable}}</view>
         <view style="width:100%">
-          <input class="field" type="{{inputMap[item.id].original.inputType || 'text'}}" maxlength="{{item.maxLength || -1}}" bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
+          <input class="field {{item.disabled?'disabled':''}}" type="{{inputMap[item.id].original.inputType || 'text'}}" maxlength="{{item.maxLength || -1}}" bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
             disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}" />
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>
@@ -15,7 +15,7 @@
       <view class="form-row flex-start" wx:elif="{{item.type==='picker'}}">
         <view class="form-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
         <view style="width:100%">
-          <view class="picker-row">
+          <view class="picker-row {{item.disabled?'disabled':''}}">
             <picker class="field" range="{{item.range}}" disabled="{{item.disabled}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}"
               range-key="name" bindchange="onPickerChange">
               {{pickerMap[item.id].hasChoose?item.range[pickerMap[item.id].idx].name:'请选择'}}
@@ -30,7 +30,7 @@
         <view class="form-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
         <view style="width:100%">
           <view class="picker-row">
-            <view class="field" bindtap="datePickerShow" data-disabled="{{item.disabled}}" data-id="{{item.id}}">{{dateMap[item.id].hasChoose?(dateMap[item.id].config.endDate?dateMap[item.id].startDate+' ~ ' + dateMap[item.id].endDate: dateMap[item.id].startDate):'请选择'}}</view>
+            <view class="field {{item.disabled?'disabled':''}}" bindtap="datePickerShow" data-disabled="{{item.disabled}}" data-id="{{item.id}}">{{dateMap[item.id].hasChoose?(dateMap[item.id].config.endDate?dateMap[item.id].startDate+' ~ ' + dateMap[item.id].endDate: dateMap[item.id].startDate):'请选择'}}</view>
             <time-picker pickerShow="{{dateMap[item.id].show}}" id="{{item.id}}" wx:if="{{!isPickerRender}}" bind:hidePicker="datePickerHide"
               bind:setPickerTime="setPickerTime" config="{{dateMap[item.id].original.config}}"></time-picker>
             <van-icon class="row-icon" name="arrow"></van-icon>
@@ -44,7 +44,7 @@
           <view class="area-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>
-        <view class="text-area">
+        <view class="text-area {{item.disabled?'disabled':''}}">
           <textarea style="width:100%" value="{{item.defaultValue || null}}" disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}"
             id="{{item.id}}" bindinput="onInput" auto-height="{{true}}" maxlength="{{item.maxLength}}" name="" cols="30" rows="10"></textarea>
           <view class="text-num">{{inputMap[item.id].value.length||0}}/{{item.maxLength}}</view>

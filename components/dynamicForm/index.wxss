@@ -9,7 +9,7 @@
   align-items: center;
 }
 .form-box{
-  padding: 0 30rpx 30px;
+  padding: 0 30rpx 0px;
   padding-right: 0;
   margin: 30rpx;
   box-sizing: border-box;
@@ -112,4 +112,8 @@
   bottom: 10px;
   text-align: right;
   color: #999;
+}
+
+.disabled{
+  opacity: 0.3;
 }

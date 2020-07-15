@@ -33,8 +33,10 @@ Page({
         type: 'input',
         id: 'num',
         lable: '数字',
+        defaultValue:'禁用',
         inputType: 'digit', //对应input组件type值(text,number)
         placeholder: '请填写数字',
+        disabled:true,
         rules: [
           
         ]
@@ -44,6 +46,7 @@ Page({
         id: 'picker2',
         lable: '状态',
         defaultIdx:0,//默认选择索引
+        disabled:true,
         isRequired:true,
         range:[
           {
