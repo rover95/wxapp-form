@@ -6,8 +6,11 @@
       <view class="form-row ipt-row " wx:if="{{item.type==='input'}}">
         <view class="form-lable {{item.isRequired?'required':'' +''}}">{{item.lable}}</view>
         <view style="width:100%">
-          <input class="field {{item.disabled?'disabled':''}}" type="{{inputMap[item.id].original.inputType || 'text'}}" maxlength="{{item.maxLength || -1}}" bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
+          <input wx:if="{{!item.disabled}}" class="field {{item.disabled?'disabled':''}}"
+            type="{{inputMap[item.id].original.inputType || 'text'}}" maxlength="{{item.maxLength || -1}}"
+            bindinput="onInput" id="{{item.id}}" value="{{item.defaultValue || ''}}"
             disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}" />
+          <view class="field disabled" wx:else>{{item.defaultValue || ''}}</view>
           <view class="error-info" wx:if="{{inputMap[item.id].error}}">{{inputMap[item.id].error}}</view>
         </view>
       </view>
@@ -15,13 +18,14 @@
       <view class="form-row flex-start" wx:elif="{{item.type==='picker'}}">
         <view class="form-lable {{item.isRequired?'required':''}}">{{item.lable}}</view>
         <view style="width:100%">
-          <view class="picker-row {{item.disabled?'disabled':''}}">
+          <view wx:if="{{!item.disabled}}" class="picker-row {{item.disabled?'disabled':''}}">
             <picker class="field" range="{{item.range}}" disabled="{{item.disabled}}" id="{{item.id}}" value="{{pickerMap[item.id].idx}}"
               range-key="name" bindchange="onPickerChange">
               {{pickerMap[item.id].hasChoose?item.range[pickerMap[item.id].idx].name:'请选择'}}
             </picker>
             <van-icon class="row-icon" name="arrow"></van-icon>
           </view>
+          <view class="field disabled" wx:else>{{pickerMap[item.id].hasChoose?item.range[pickerMap[item.id].idx].name:'请选择'}}</view>
           <view class="error-info" wx:if="{{pickerMap[item.id].error}}">{{pickerMap[item.id].error}}</view>
         </view>
       </view>
@@ -46,8 +50,10 @@
         </view>
         <view class="text-area {{item.disabled?'disabled':''}}">
           <textarea style="width:100%" value="{{item.defaultValue || null}}" disabled="{{item.disabled}}" placeholder="{{inputMap[item.id].placeholder || '请填写内容'}}"
-            id="{{item.id}}" bindinput="onInput" auto-height="{{true}}" maxlength="{{item.maxLength}}" name="" cols="30" rows="10"></textarea>
-          <view class="text-num">{{inputMap[item.id].value.length||0}}/{{item.maxLength}}</view>
+            id="{{item.id}}" bindinput="onInput" auto-height="{{true}}" maxlength="{{item.maxLength || -1}}" name=""
+            cols="30" rows="10"></textarea>
+          <view wx:if="{{item.maxLength}}" class="text-num">{{inputMap[item.id].value.length||0}}/{{item.maxLength}}
+          </view>
         </view>
       </view>
       <!-- 文件上传 -->
