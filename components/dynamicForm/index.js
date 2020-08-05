@@ -19,6 +19,9 @@ Component({
       if (e) {
         this.formSubmit();
       }
+    },
+    'formData': function () {
+      this.formInit();
     }
   },
   /**
